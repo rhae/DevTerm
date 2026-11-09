@@ -1,4 +1,4 @@
-#include "CScpiResponse.h"
+#include "ScpiResponse.h"
 
 #include <cctype>
 #include <cmath>

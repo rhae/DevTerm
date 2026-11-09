@@ -1,4 +1,4 @@
-#include "CCommunicationWorker.h"
+#include "CommunicationWorker.h"
 
 #include <chrono>
 #include <memory>

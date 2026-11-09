@@ -51,6 +51,7 @@ void LoadFont(float Size)
 {
   ImFontConfig Config;
   Config.SizePixels = Size;
+  Config.RasterizerMultiply = 1.2f;
   ImGuiIO& Io = GetIO();
   Io.FontDefault = Io.Fonts->AddFontDefaultVector(&Config);
 }
@@ -69,28 +70,28 @@ void StyleColorsSpectrum(bool Dark)
   const ImVec4 Accent = ToVec4(Palette.BLUE500);
   const ImVec4 AccentHovered = ToVec4(Palette.BLUE400);
   const ImVec4 AccentActive = ToVec4(Palette.BLUE700);
-  const ImVec4 Background = Dark ? ToVec4(Palette.GRAY75) : ToVec4(Color(0xf6f8fa));
+  const ImVec4 Background = ToVec4(Dark ? Color(0x444344) : Color(0xCDD6D9));
   const ImVec4 Surface = Dark ? ToVec4(Palette.GRAY100) : Background;
   const ImVec4 Control = Dark ? ToVec4(Palette.GRAY200) : Background;
-  const ImVec4 Hovered = Dark ? ToVec4(Palette.GRAY300) : ToVec4(Color(0xC5C5C5));
-  const ImVec4 Active = Dark ? ToVec4(Palette.GRAY400) : ToVec4(Color(0xB5B5B5));
+  const ImVec4 Hovered = Dark ? ToVec4(Palette.GRAY300) : ToVec4(Color(0xB8C6D9));
+  const ImVec4 Active = Dark ? ToVec4(Palette.GRAY400) : ToVec4(Color(0x9FB5D2));
   const ImVec4 Frame = Dark ? Control : ToVec4(Static::WHITE);
-  const ImVec4 Border = ToVec4(Palette.GRAY500);
+  const ImVec4 Border = ToVec4(Palette.GRAY600);
 
   Style.WindowRounding = 0.0f;
-  Style.ChildRounding = 4.0f;
-  Style.FrameRounding = 4.0f;
-  Style.PopupRounding = 4.0f;
-  Style.ScrollbarRounding = 4.0f;
-  Style.GrabRounding = 4.0f;
-  Style.TabRounding = 4.0f;
+  Style.ChildRounding = 0.0f;
+  Style.FrameRounding = 0.0f;
+  Style.PopupRounding = 0.0f;
+  Style.ScrollbarRounding = 0.0f;
+  Style.GrabRounding = 0.0f;
+  Style.TabRounding = 0.0f;
   Style.FrameBorderSize = 1.0f;
   Style.WindowBorderSize = 0.0f;
   Style.FramePadding = ImVec2(8.0f, 5.0f);
   Style.ItemSpacing = ImVec2(8.0f, 6.0f);
 
-  StyleColors[ImGuiCol_Text] = ToVec4(Palette.GRAY900);
-  StyleColors[ImGuiCol_TextDisabled] = ToVec4(Palette.GRAY600);
+  StyleColors[ImGuiCol_Text] = ToVec4(Dark ? Palette.GRAY900 : Color(0x24292F));
+  StyleColors[ImGuiCol_TextDisabled] = ToVec4(Dark ? Palette.GRAY600 : Color(0x595959));
   StyleColors[ImGuiCol_WindowBg] = Background;
   StyleColors[ImGuiCol_ChildBg] = Surface;
   StyleColors[ImGuiCol_PopupBg] = Surface;
@@ -123,7 +124,8 @@ void StyleColorsSpectrum(bool Dark)
   StyleColors[ImGuiCol_ResizeGrip] = Border;
   StyleColors[ImGuiCol_ResizeGripHovered] = AccentHovered;
   StyleColors[ImGuiCol_ResizeGripActive] = AccentActive;
-  StyleColors[ImGuiCol_InputTextCursor] = ToVec4(Palette.GRAY900);
+  StyleColors[ImGuiCol_InputTextCursor] =
+      ToVec4(Dark ? Palette.GRAY900 : Color(0x24292F));
   StyleColors[ImGuiCol_Tab] = Surface;
   StyleColors[ImGuiCol_TabHovered] = Hovered;
   StyleColors[ImGuiCol_TabSelected] = Control;

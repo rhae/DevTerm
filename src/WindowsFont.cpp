@@ -1,4 +1,4 @@
-#include "CWindowsFont.h"
+#include "WindowsFont.h"
 
 #include "imgui.h"
 
@@ -18,6 +18,7 @@ bool LoadWindowsFont(const std::wstring& Path, float Size)
 
   ImFontConfig Config;
   Config.Flags |= ImFontFlags_NoLoadError;
+  Config.RasterizerMultiply = 1.15f;
   ImFont* Font = ImGui::GetIO().Fonts->AddFontFromFileTTF(&Utf8Path[0], Size, &Config);
   if (Font == NULL)
     return false;
@@ -31,5 +32,9 @@ bool LoadWindowsDefaultFont(float Size)
   UINT Length = GetWindowsDirectoryW(Directory, MAX_PATH);
   if (Length == 0 || Length >= MAX_PATH)
     return false;
-  return LoadWindowsFont(std::wstring(Directory, Length) + L"\\Fonts\\segoeui.ttf", Size);
+  const std::wstring FontDirectory =
+      std::wstring(Directory, Length) + L"\\Fonts\\";
+  if (LoadWindowsFont(FontDirectory + L"segoeuib.ttf", Size))
+    return true;
+  return LoadWindowsFont(FontDirectory + L"segoeui.ttf", Size);
 }

@@ -1,7 +1,7 @@
 #include "theme/spectrum.h"
-#include "CCommunicationWorker.h"
-#include "CScpiResponse.h"
-#include "CWindowsFont.h"
+#include "CommunicationWorker.h"
+#include "ScpiResponse.h"
+#include "WindowsFont.h"
 #include "imgui.h"
 
 #include <chrono>
@@ -26,20 +26,29 @@ static bool TestTheme()
   const ImU32 DarkFrame = ImGui::ColorConvertFloat4ToU32(Style.Colors[ImGuiCol_FrameBg]);
   const ImU32 DarkButton = ImGui::ColorConvertFloat4ToU32(Style.Colors[ImGuiCol_Button]);
   const ImGui::Spectrum::SpectrumPalette* DarkPalette = ImGui::Spectrum::Colors;
-  bool Passed = Check(DarkBackground.x < 0.2f, "Dark Spectrum background is not dark.");
+  bool Passed = Check(ImGui::ColorConvertFloat4ToU32(DarkBackground) ==
+                      IM_COL32(0x44, 0x43, 0x44, 0xFF),
+                      "Dark Spectrum background must be #444344.");
+  Passed = Check(Style.FrameRounding == 0.0f && Style.ChildRounding == 0.0f &&
+                 Style.PopupRounding == 0.0f && Style.ScrollbarRounding == 0.0f &&
+                 Style.GrabRounding == 0.0f && Style.TabRounding == 0.0f,
+                 "Spectrum controls and frames must use square corners.") && Passed;
   Passed = Check(Style.Colors[ImGuiCol_TabSelectedOverline].z >
                  Style.Colors[ImGuiCol_TabSelectedOverline].x,
                  "Selected tab must use the blue Spectrum accent.") && Passed;
 
   ImGui::Spectrum::StyleColorsSpectrum(false);
   Passed = Check(ImGui::Spectrum::Colors != DarkPalette, "Palette did not change.") && Passed;
+  Passed = Check(ImGui::ColorConvertFloat4ToU32(Style.Colors[ImGuiCol_WindowBg]) ==
+                 IM_COL32(0xCD, 0xD6, 0xD9, 0xFF),
+                 "Light Spectrum background must be #CDD6D9.") && Passed;
   const ImGuiCol PanelColors[] = { ImGuiCol_WindowBg, ImGuiCol_ChildBg, ImGuiCol_PopupBg,
                                    ImGuiCol_MenuBarBg, ImGuiCol_Button };
   for (size_t Index = 0; Index < sizeof(PanelColors) / sizeof(PanelColors[0]); ++Index)
   {
     Passed = Check(ImGui::ColorConvertFloat4ToU32(Style.Colors[PanelColors[Index]]) ==
-                   IM_COL32(0xD6, 0xD6, 0xD6, 0xFF),
-                   "Light panel and button backgrounds must be #D6D6D6.") && Passed;
+                   IM_COL32(0xCD, 0xD6, 0xD9, 0xFF),
+                   "Light panel and button backgrounds must be #CDD6D9.") && Passed;
   }
   const ImGuiCol InputColors[] = { ImGuiCol_FrameBg, ImGuiCol_FrameBgHovered,
                                    ImGuiCol_FrameBgActive };
@@ -54,7 +63,8 @@ static bool TestTheme()
                  "Selected checkbox must use the blue Spectrum accent.") && Passed;
 
   ImGui::Spectrum::StyleColorsSpectrum(true);
-  Passed = Check(Style.Colors[ImGuiCol_WindowBg].x == DarkBackground.x,
+  Passed = Check(ImGui::ColorConvertFloat4ToU32(Style.Colors[ImGuiCol_WindowBg]) ==
+                 IM_COL32(0x44, 0x43, 0x44, 0xFF),
                  "Switching back to dark did not restore the palette.") && Passed;
   Passed = Check(ImGui::ColorConvertFloat4ToU32(Style.Colors[ImGuiCol_FrameBg]) == DarkFrame &&
                  ImGui::ColorConvertFloat4ToU32(Style.Colors[ImGuiCol_Button]) == DarkButton,

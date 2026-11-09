@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CConnection.h"
+#include "Connection.h"
 
 #include <deque>
 #include <mutex>

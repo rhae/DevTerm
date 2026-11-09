@@ -37,11 +37,20 @@ target_link_libraries(implot PUBLIC imgui)
 find_package(Threads REQUIRED)
 
 add_executable(DevTerm WIN32
-  src/CApplication.cpp
-  src/CCommunicationWorker.cpp
-  src/CConnection.cpp
-  src/CScpiResponse.cpp
-  src/CWindowsFont.cpp
+  src/Application.cpp
+  src/CommunicationWorker.cpp
+  src/Connection.cpp
+  src/ScpiResponse.cpp
+  src/WindowsFont.cpp
+  src/window/Window.cpp
+  src/window/Win32Window.cpp
+  src/window/OpenGLContext.cpp
+  src/ui/shell/TitleBar.cpp
+  src/ui/shell/MenuBar.cpp
+  src/ui/shell/StatusBar.cpp
+  src/ui/terminal/ConnectionBar.cpp
+  src/ui/terminal/WorkspaceTabs.cpp
+  src/ui/terminal/CommandInput.cpp
   src/theme/spectrum.cpp
   src/main.cpp
 )
@@ -63,10 +72,10 @@ if(BUILD_TESTING)
   add_executable(DevTermThemeTest
     tests/theme_test.cpp
     src/theme/spectrum.cpp
-    src/CCommunicationWorker.cpp
-    src/CConnection.cpp
-    src/CScpiResponse.cpp
-    src/CWindowsFont.cpp
+    src/CommunicationWorker.cpp
+    src/Connection.cpp
+    src/ScpiResponse.cpp
+    src/WindowsFont.cpp
   )
   target_include_directories(DevTermThemeTest PRIVATE src)
   target_link_libraries(DevTermThemeTest PRIVATE imgui Threads::Threads ws2_32 dwmapi)
