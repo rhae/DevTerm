@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "DevTerm: Debug",
+      "type": "lldb-dap",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/debug/DevTerm.exe",
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "DevTerm: Build Debug"
+    }
+  ]
+}

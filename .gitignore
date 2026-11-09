@@ -1,0 +1,7 @@
+build/
+
+*.bak
+*.o
+*.obj
+*.exe
+*.log
